@@ -1,3 +1,7 @@
+🔗 Aplicação Online:
+https://smartclimate-online.onrender.com
+
+
 # 🌍 SmartClimateAI — Online Edition
 
 Sistema de Inteligência Atmosférica com IA rodando 100% online.
