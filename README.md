@@ -1,5 +1,4 @@
-🔗 Aplicação Online:
-https://smartclimate-online.onrender.com
+
 
 
 # 🌍 SmartClimateAI — Online Edition
