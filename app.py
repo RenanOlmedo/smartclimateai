@@ -6,6 +6,7 @@ from download import get_climate_data
 from dashboard_online import generate_dashboard
 from cientifica_online import generate_cientifica
 from forecast_engine import update_forecast_file
+from flask import render_template
 
 app = Flask(__name__)
 
@@ -35,25 +36,25 @@ def requires_auth(f):
 @app.route("/")
 @requires_auth
 def home():
-    return """
-    <h1>SmartClimateAI</h1>
-    <a href="/dashboard"><button>📊 Painel Digital</button></a>
-    <a href="/cientifica"><button>🔬 Painel Científico</button></a>
-    <br><br>
-    <a href="/update_forecast"><button>🧠 Atualizar IA</button></a>
-    """
+    return render_template("home.html")
+
 
 @app.route("/dashboard")
 @requires_auth
 def dashboard():
     df = get_climate_data()
-    return generate_dashboard(df)
+    graph = generate_dashboard(df)
+    return render_template("dashboard.html", graph=graph)
+
 
 @app.route("/cientifica")
 @requires_auth
 def cientifica():
     df = get_climate_data()
-    return generate_cientifica(df)
+    graph = generate_cientifica(df)
+    return render_template("cientifica.html",graph=graph)
+    
+
 
 @app.route("/update_forecast")
 @requires_auth

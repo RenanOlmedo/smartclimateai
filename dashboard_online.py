@@ -5,7 +5,6 @@ import os
 
 def generate_dashboard(df):
 
-    # Se ainda não existir cache
     if not os.path.exists("forecast_cache.json"):
         return """
         <h2>Ainda não existe previsão.</h2>
@@ -31,68 +30,80 @@ def generate_dashboard(df):
     arrow_hum = "↑" if delta_hum > 0 else "↓"
     arrow_pres = "↑" if delta_pres > 0 else "↓"
 
-    chance_chuva = min(max((last_hum/100) * (abs(delta_pres)/10) * 100, 0), 100)
-    chance_chuva = round(chance_chuva, 1)
-
+    # 3 COLUNAS CENTRALIZADAS
     fig = make_subplots(
-        rows=2, cols=4,
-        specs=[[{'type':'indicator'}]*4,
-               [{'type':'indicator'}]*4],
+        rows=2, cols=3,
+        specs=[[{'type':'indicator'}]*3,
+               [{'type':'indicator'}]*3],
+        vertical_spacing=0.25,
     )
+
+    # ======================
+    # MEDIDORES REAIS (MAIORES)
+    # ======================
 
     fig.add_trace(go.Indicator(
         mode="gauge+number",
         value=last_temp,
-        title={'text': "Temp Real (°C)"},
-        gauge={'axis': {'range':[0,50]}}
+        title={'text': "🌡 Temp Real (°C)", 'font': {'size': 32}},
+        gauge={'axis': {'range':[0,50]}},
+        number={'font': {'size': 50}}
     ), row=1, col=1)
 
     fig.add_trace(go.Indicator(
         mode="gauge+number",
         value=last_hum,
-        title={'text': "Umidade Real (%)"},
-        gauge={'axis': {'range':[0,100]}}
+        title={'text': "💧 Umidade Real (%)", 'font': {'size': 32}},
+        gauge={'axis': {'range':[0,100]}},
+        number={'font': {'size': 50}}
     ), row=1, col=2)
 
     fig.add_trace(go.Indicator(
         mode="gauge+number",
         value=last_pres,
-        title={'text': "Pressão Real (hPa)"},
-        gauge={'axis': {'range':[900,1050]}}
+        title={'text': "🧭 Pressão Real (hPa)", 'font': {'size': 32}},
+        gauge={'axis': {'range':[900,1050]}},
+        number={'font': {'size': 50}}
     ), row=1, col=3)
 
-    fig.add_trace(go.Indicator(
-        mode="gauge+number",
-        value=chance_chuva,
-        title={'text': "Chance Chuva (%)"},
-        gauge={'axis': {'range':[0,100]}}
-    ), row=1, col=4)
+    # ======================
+    # PREVISÕES
+    # ======================
 
     fig.add_trace(go.Indicator(
         mode="number+delta",
         value=pred_temp,
         delta={'reference': last_temp},
-        title={'text': f"Temp Prev {arrow_temp}"}
+        title={'text': f"Temp Prev {arrow_temp}", 'font': {'size': 40}},
+        number={'font': {'size': 50}}
     ), row=2, col=1)
 
     fig.add_trace(go.Indicator(
         mode="number+delta",
         value=pred_hum,
         delta={'reference': last_hum},
-        title={'text': f"Umid Prev {arrow_hum}"}
+        title={'text': f"Umid Prev {arrow_hum}", 'font': {'size': 40}},
+        number={'font': {'size': 50}}
     ), row=2, col=2)
 
     fig.add_trace(go.Indicator(
         mode="number+delta",
         value=pred_pres,
         delta={'reference': last_pres},
-        title={'text': f"Pressão Prev {arrow_pres}"}
+        title={'text': f"Pressão Prev {arrow_pres}", 'font': {'size': 40}},
+        number={'font': {'size': 50}}
     ), row=2, col=3)
 
     fig.update_layout(
-        paper_bgcolor="white",
-        title={'text': "SmartClimateAI - Painel Digital",
-               'x':0.5}
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        title={
+            'text': "",
+            'x': 0.5,
+            'font': {'size': 28}
+        },
+        height=700,
+        margin=dict(t=80)
     )
 
-    return fig.to_html(full_html=True)
+    return fig.to_html(full_html=False)

@@ -50,7 +50,7 @@ def generate_cientifica(df):
     fig.add_trace(go.Indicator(
         mode="gauge+number",
         value=IAI,
-        title={'text': "Índice de Instabilidade", 'font': {'size': 22}},
+        title={'text': "Índice de Instabilidade", 'font': {'size': 40}},
         gauge={
             'axis': {'range':[0,100]},
             'steps': [
@@ -74,18 +74,18 @@ def generate_cientifica(df):
     )
 
     fig.add_annotation(
-        x=0.75, y=0.5,
+        x=0.95, y=0.5,
         text=info,
         showarrow=False,
-        align="left",
-        font={'size':18}
+        align='left',
+        font={'size':30}
     )
 
     fig.update_layout(
-        title="SmartClimate AI — Painel Atmosférico Científico",
+        title="",
         paper_bgcolor="white",
         font={'family':'Arial'},
         margin={'t':80}
     )
 
-    return fig.to_html(full_html=True)
+    return fig.to_html(full_html=False)

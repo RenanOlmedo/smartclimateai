@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>SmartClimate AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+
+        body {
+            margin:0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #155ebe, #7e9cb1);
+        }
+
+        header {
+            background:white;
+            padding:15px 30px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            box-shadow:0 4px 15px rgba(0,0,0,0.1);
+            position:sticky;
+            top:0;
+            z-index:1000;
+        }
+
+        .logo {
+            font-size:22px;
+            font-weight:bold;
+            color: #2563eb;
+        }
+
+        .nav-buttons a {
+            text-decoration:none;
+            margin-left:10px;
+        }
+
+        .nav-buttons button {
+            background:#e3f2fd;
+            border:none;
+            padding:8px 14px;
+            border-radius:8px;
+            cursor:pointer;
+            font-weight:600;
+        }
+
+        .status {
+            color:green;
+            font-weight:bold;
+            margin-left:20px;
+        }
+
+        .container {
+            padding:30px;
+        }
+
+        .card {
+            background:white;
+            padding:25px;
+            border-radius:12px;
+            box-shadow:0 6px 20px rgba(0,0,0,0.1);
+        }
+
+        footer {
+            margin-top:40px;
+            background:white;
+            padding:20px;
+            text-align:center;
+            font-size:14px;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction:column;
+                gap:10px;
+            }
+
+            .container {
+                padding:15px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🌤 SmartClimate AI</div>
+
+    <div class="nav-buttons">
+        <a href="/"><button>🏠 Home</button></a>
+        <a href="/dashboard"><button>📊 Digital</button></a>
+        <a href="/cientifica"><button>🔬 Científico</button></a>
+        <a href="/update_forecast"><button style="background:#138804;">🔄 Atualizar IA</button></a>
+        <span class="status">● Online</span>
+    </div>
+</header>
+
+<div class="container">
+    <div class="card">
+        {% block content %}{% endblock %}
+    </div>
+</div>
+
+<footer>
+    SmartClimate AI © 2026  - Criado por Renan Ferreira Olmedo -
+</footer>
+
+</body>
+</html>
