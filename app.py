@@ -5,10 +5,11 @@ import os
 from download import get_climate_data
 from dashboard_online import generate_dashboard
 from cientifica_online import generate_cientifica
+from forecast_engine import update_forecast_file
 
 app = Flask(__name__)
 
-# ======= AUTENTICAÇÃO =======
+# ================= AUTH =================
 
 def check_auth(username, password):
     return username == os.environ.get("APP_USER") and password == os.environ.get("APP_PASS")
@@ -29,7 +30,7 @@ def requires_auth(f):
         return f(*args, **kwargs)
     return decorated
 
-# ======= ROTAS =======
+# ================= ROTAS =================
 
 @app.route("/")
 @requires_auth
@@ -38,6 +39,8 @@ def home():
     <h1>SmartClimateAI</h1>
     <a href="/dashboard"><button>📊 Painel Digital</button></a>
     <a href="/cientifica"><button>🔬 Painel Científico</button></a>
+    <br><br>
+    <a href="/update_forecast"><button>🧠 Atualizar IA</button></a>
     """
 
 @app.route("/dashboard")
@@ -52,6 +55,11 @@ def cientifica():
     df = get_climate_data()
     return generate_cientifica(df)
 
+@app.route("/update_forecast")
+@requires_auth
+def update_forecast():
+    update_forecast_file()
+    return "<h2>Previsão atualizada com sucesso!</h2><a href='/'>Voltar</a>"
+
 if __name__ == "__main__":
     app.run(debug=True)
-
