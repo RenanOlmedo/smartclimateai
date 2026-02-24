@@ -61,5 +61,3 @@ def update_forecast():
     update_forecast_file()
     return "<h2>Previsão atualizada com sucesso!</h2><a href='/'>Voltar</a>"
 
-if __name__ == "__main__":
-    app.run(debug=True)
